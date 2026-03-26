@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfolio - Graphics Designer & Fuller Stack Developer{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="{% url 'portofolio:home' %}">Portfolio</a>
+                <span class="tagline">Professional Design & Development</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'portofolio:home' %}">Home</a></li>
+                <li><a href="{% url 'portofolio:projects' %}">Projects</a></li>
+                <li><a href="{% url 'portofolio:about' %}">About</a></li>
+                <li><a href="{% url 'portofolio:contact' %}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>Professional Services</h4>
+                    <p>&copy; 2026 All rights reserved. Excellence in design and development.</p>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link">GitHub</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

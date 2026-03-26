@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - Portfolio{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>About Me</h1>
+        <p>Professional expertise in graphic design and full-stack web development</p>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Professional Profile</h2>
+                {% if profile %}
+                    <p>{{ profile.bio }}</p>
+                {% else %}
+                    <p>I am a results-driven graphics designer and full-stack developer with a proven track record of delivering exceptional digital solutions. My approach combines aesthetic excellence with technical proficiency to create seamless user experiences across all platforms.</p>
+                    <p>With years of experience in both creative design and software development, I bring a unique perspective that bridges the gap between visual appeal and functional excellence. I'm committed to understanding your business objectives and translating them into digital assets that drive measurable results.</p>
+                {% endif %}
+
+                <h3 style="margin-top: 30px;">Professional Services</h3>
+                <ul class="expertise-list">
+                    <li>Strategic UI/UX Design & Wireframing</li>
+                    <li>Professional Brand Identity Development</li>
+                    <li>Responsive Web Application Development</li>
+                    <li>Full-Stack Web Solutions (Frontend & Backend)</li>
+                    <li>Database Architecture & Optimization</li>
+                    <li>Digital Asset Creation & Management</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                {% if profile and profile.profile_image %}
+                    <div class="profile-container">
+                        <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-image">
+                        <div class="profile-glow"></div>
+                        <h3 style="text-align: center; margin-top: 1.5rem; margin-bottom: 0.5rem;">{{ profile.name }}</h3>
+                        <p style="text-align: center; color: var(--accent-orange); font-weight: 500;">{{ profile.title }}</p>
+                    </div>
+                {% else %}
+                    <div class="placeholder-image">Your Photo</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills">
+    <div class="container">
+        <div class="section-header">
+            <h2>Technical Skills & Proficiencies</h2>
+            <p>Demonstrated expertise across multiple design and development disciplines</p>
+        </div>
+        <div class="skills-grid">
+            {% regroup skills by category as skills_by_category %}
+            {% for category in skills_by_category %}
+            <div class="skill-category">
+                <h3>{{ category.grouper|title }}</h3>
+                <div class="skill-list">
+                    {% for skill in category.list %}
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">{{ skill.name }}</span>
+                            <span class="skill-percent">{{ skill.proficiency }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects - Portfolio{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Project Portfolio</h1>
+        <p>A curated collection of design and development projects that showcase innovation and technical excellence</p>
+    </div>
+</section>
+
+<section class="projects-page">
+    <div class="container">
+        <!-- Filter Buttons -->
+        <div class="filter-buttons">
+            <a href="{% url 'portofolio:projects' %}" class="filter-btn {% if current_category == 'all' %}active{% endif %}">All</a>
+            <a href="?category=design" class="filter-btn {% if current_category == 'design' %}active{% endif %}">Design</a>
+            <a href="?category=development" class="filter-btn {% if current_category == 'development' %}active{% endif %}">Development</a>
+            <a href="?category=both" class="filter-btn {% if current_category == 'both' %}active{% endif %}">Design & Dev</a>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" onerror="this.src='{% static 'images/placeholder.jpg' %}'">
+                    <div class="project-overlay">
+                        <a href="{{ project.link }}" class="project-link" {% if not project.link %}style="display:none"{% endif %}>View Project</a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                    <div class="project-meta">
+                        <span class="category">{{ project.get_category_display }}</span>
+                        {% if project.technologies %}
+                        <span class="tech">{{ project.technologies }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                <p>No projects in this category yet.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

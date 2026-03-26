@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ek Developers{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>Professional Design & Full Stack Development Solutions</h1>
+            <p>Transforming ideas into stunning digital experiences through strategic design and robust full-stack development</p>
+            <div class="hero-buttons">
+                <a href="{% url 'portofolio:projects' %}" class="btn btn-primary">View My Portfolio</a>
+                <a href="{% url 'portofolio:contact' %}" class="btn btn-secondary">Schedule a Consultation</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="profile-container">
+                {% if profile and profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-image">
+                {% else %}
+                    <img src="{% static 'images/profile.svg' %}" alt="Professional Profile" class="profile-image">
+                {% endif %}
+                <div class="profile-glow"></div>
+            </div>
+            {% if profile %}
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <h2 style="margin-bottom: 0.5rem;">{{ profile.name }}</h2>
+                <p style="color: var(--accent-orange); font-weight: 500;">{{ profile.title }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="hero-background"></div>
+</section>
+
+<!-- Featured Projects -->
+<section class="featured-projects">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Work</h2>
+            <p>Showcasing successful projects that demonstrate our expertise in design and development</p>
+        </div>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" onerror="this.src='{% static 'images/placeholder.jpg' %}'">
+                    <div class="project-overlay">
+                        <a href="{{ project.link }}" class="project-link" {% if not project.link %}style="display:none"{% endif %}>View Project</a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:15 }}</p>
+                    <div class="project-meta">
+                        <span class="category">{{ project.get_category_display }}</span>
+                        {% if project.technologies %}
+                        <span class="tech">{{ project.technologies }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <p>No projects added yet. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center" style="margin-top: 40px;">
+            <a href="{% url 'portofolio:projects' %}" class="btn btn-primary">See All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills">
+    <div class="container">
+        <div class="section-header">
+            <h2>Core Competencies</h2>
+            <p>Comprehensive expertise across design and development disciplines</p>
+        </div>
+        <h2>Skills & Expertise</h2>
+        <div class="skills-grid">
+            {% regroup skills by category as skills_by_category %}
+            {% for category in skills_by_category %}
+            <div class="skill-category">
+                <h3>{{ category.grouper }}</h3>
+                <div class="skill-list">
+                    {% for skill in category.list %}
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">{{ skill.name }}</span>
+                            <span class="skill-percent">{{ skill.proficiency }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Ready to Elevate Your Project?</h2>
+        <p>Let's collaborate to create something exceptional. I'm dedicated to delivering results that exceed expectations.</p>
+        <a href="{% url 'portofolio:contact' %}" class="btn btn-primary">Get Started Today</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upload Project - Portfolio{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>Upload New Project</h1>
+        <p>Add a new project to your portfolio</p>
+    </div>
+</section>
+
+<section class="upload-section">
+    <div class="container">
+        <div class="upload-form-container">
+            <form method="POST" enctype="multipart/form-data" class="upload-form">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.title.id_for_label }}">Project Title</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                            <div class="error">{{ form.title.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}">Category</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                            <div class="error">{{ form.category.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Project Description</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="error">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.image.id_for_label }}">Project Image</label>
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <div class="error">{{ form.image.errors }}</div>
+                        {% endif %}
+                        <small class="form-help">Upload a high-quality image of your project (JPG, PNG, max 5MB)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.link.id_for_label }}">Project Link (Optional)</label>
+                        {{ form.link }}
+                        {% if form.link.errors %}
+                            <div class="error">{{ form.link.errors }}</div>
+                        {% endif %}
+                        <small class="form-help">Link to live demo or project page</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.technologies.id_for_label }}">Technologies Used</label>
+                    {{ form.technologies }}
+                    {% if form.technologies.errors %}
+                        <div class="error">{{ form.technologies.errors }}</div>
+                    {% endif %}
+                    <small class="form-help">Separate technologies with commas (e.g., HTML, CSS, JavaScript, Python)</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Upload Project</button>
+                    <a href="{% url 'portofolio:projects' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
